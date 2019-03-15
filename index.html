@@ -1,0 +1,265 @@
+<?php require "vendor/autoload.php"; ?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Mesin Kontrol Minyak Tanah</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+.loading {
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    overflow: visible;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+  
+  /* Transparent Overlay */
+  .loading:before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+  }
+  
+  /* :not(:required) hides these rules from IE9 and below */
+  .loading:not(:required) {
+    /* hide "loading..." text */
+    font: 0/0 a;
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+  }
+  
+  .loading:not(:required):after {
+    content: '';
+    display: block;
+    font-size: 10px;
+    width: 1em;
+    height: 1em;
+    margin-top: -0.5em;
+    -webkit-animation: spinner 1500ms infinite linear;
+    -moz-animation: spinner 1500ms infinite linear;
+    -ms-animation: spinner 1500ms infinite linear;
+    -o-animation: spinner 1500ms infinite linear;
+    animation: spinner 1500ms infinite linear;
+    border-radius: 0.5em;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+    box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+  }
+
+  /* Animation */
+  
+  @-webkit-keyframes spinner {
+    0% {
+      -webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      -moz-transform: rotate(360deg);
+      -ms-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @-moz-keyframes spinner {
+    0% {
+      -webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      -moz-transform: rotate(360deg);
+      -ms-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @-o-keyframes spinner {
+    0% {
+      -webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      -moz-transform: rotate(360deg);
+      -ms-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes spinner {
+    0% {
+      -webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      -moz-transform: rotate(360deg);
+      -ms-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+</style>
+</head>
+<body class="container">
+      <div id="loading" class="loading" style="display: none;">Loading&#8230;</div>
+      <hr>
+      <!-- <button id="test" type="button" class="btn-block">Test Loading</button> -->
+      <h1 class="text-center">Lakukan Scanning Kartu Kendali</h1>
+      <hr>
+      <hr>
+      <center>
+      <hr>
+      <video id="preview"></video>
+      <hr>
+      </center>
+      <div class="row">
+          <div class="col-sm-12 text-center well">
+              <h3>Response</h3>
+              <h1 id="hasil"></h1>
+          </div>
+          <div class="col-sm-12 text-center well" >
+            <h3>Hasil Scanning</h3>
+            <h1 id="response" class="well"></h1>
+          </div>
+          
+      </div>
+      <div id="sendDiv" style="display:none">
+          <hr>
+          <br>
+          <br>
+          <br>
+        <input type="hidden" name="form_input_data" id="form_input_data">
+        <button type="button" class="btn btn-lg btn-warning btn-block" id="send">Buka Keran Mesin <i class="fa fa-paper-plane"></i></button>
+        <hr>
+        <br>
+        <br>
+        <br>
+      </div>
+      <hr>
+      <h1 class="text-center">Selamat Datang</h1>
+          <div class="well">
+            <p>Mesin Kontrol Subsidi Minyak Desa Merupakan Sebuah Alat untuk mengelola dan memanajemen data subsidi dan pembagian minyak otomatis dan terukur menggunakan Kartu Kendali dan berbasis <i>Internet Of Things <b>IoT</b></i></p>
+            <br>
+            <hr>
+            <br>
+            <button type="button" id="btn_scan" class="btn btn-lg btn-success btn-block">Lakukan Pemindaian <i class="fa fa-camera"></i></button>
+            <hr>
+            
+          </div>
+          
+      <hr>
+   
+    
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+  <script src="jquery.Playsound.js"></script>
+
+    <!-- <script src="instascan.min.js"></script> -->
+    
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $.playSound("welcome.mp3").delay( 1000 );
+    });
+     $('#hasil').text("");
+      let scanner = new Instascan.Scanner({ 
+          video: document.getElementById('preview'),
+          mirror: false,
+        });
+        scanner.addListener('scan', function (content) {
+          $('#sendDiv').show();
+          $('#form_input_data').val(content);
+          $('#hasil').text(content);
+          $.playSound("buka_keran2.mp3");
+        });
+        function lakukan_scanning(){
+          $.stopSound();
+          Instascan.Camera.getCameras().then(function (cameras) {
+          if (cameras.length > 0) {  
+              scanner.start(cameras[0]);
+              // $.playSound("perintah_arahkan.mp3");
+          } else {
+            console.error('No cameras found.');
+          }
+        }).catch(function (e) {
+          console.error(e);
+        });
+          
+        }
+        function stop_scanning(){
+          scanner.stop();
+          $.playSound("terimakasih.mp3");
+        }
+      $('#btn_scan').on('click', function(){
+        if($(this).html().trim() == 'Lakukan Pemindaian <i class="fa fa-camera"></i>' ){
+        lakukan_scanning();
+        $(this).attr('class', 'btn btn-lg btn-warning btn-block');
+        $(this).html('Matikan Pemindaian <i class="fa fa-camera"></i>');
+        }else{
+            $(this).attr('class', 'btn btn-lg btn-success btn-block');
+            $(this).html('Lakukan Pemindaian <i class="fa fa-camera"></i>');
+            stop_scanning();
+            $('#sendDiv').hide();
+        }
+      });
+      
+    </script>
+   
+    <script>
+      // $("#test").on('click', function(){
+      //   $("#loading").show();
+      // });
+      $('#send').on('click', function(){
+        $("#loading").show();
+        var data = $('#form_input_data').val();
+        kirimData(data);
+        // alert(data);
+      });
+      function kirimData(data){
+        $.stopSound();
+        $.ajax({
+        url: 'processing/pilih_engine.php',
+        type: 'post',
+        data: {
+          data : data
+        },
+        success: function(output){
+          $("#loading").hide();
+          $('#response').text(output);
+          $.playSound("terimakasih.mp3");
+        }
+        });
+      }
+    </script>
+</body>
+</html>

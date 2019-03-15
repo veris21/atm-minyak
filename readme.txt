@@ -1,0 +1,1 @@
+sudo chown -R pi:www-data /var/www
