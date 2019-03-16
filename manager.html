@@ -6,8 +6,6 @@
 
   <title>Mesin Kontrol Minyak Tanah</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-
   <style>
       .table-responsive {
           display: table;
@@ -135,6 +133,10 @@
 <body class="container">
     <div id="loading" class="loading" style="display: none;">Loading&#8230;</div>
       <hr>
+      <center>
+          <img src="beltim.png" alt="" width="120">
+        </center>
+      <hr>
       <h1 class="text-center">Selamat Datang Di Halaman Manager System</h1>
       <div class="well">
         <p>Mesin Kontrol Subsidi Minyak Desa Merupakan Sebuah Alat untuk mengelola dan memanajemen data subsidi dan pembagian minyak otomatis dan terukur menggunakan Kartu Kendali dan berbasis <i>Internet Of Things <b>IoT</b></i></p>
@@ -142,14 +144,23 @@
       </div>
       <hr>
       <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="col-md-5 col-sm-5 col-xs-5">
           <a class="btn btn-block btn-warning" href="processing/laporan.php">Download Laporan <i class="fa fa-table"></i></a>
         </div>
+        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+        <div class="col-md-5 col-sm-5 col-xs-5">
+          <button type="button" onclick="isiulang()" class="btn btn-primary btn-block">
+            Isi Ulang Tangki Ukur
+          </button>
+        </div>
+      </div>
+
         <hr>
+        <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
-          <div class="table-responsive">
             <div class="card">
               <div class="card-body">
+                  <div class="table-responsive">
                   <table class="table table-striped table-responsive-lg" width="100%">
                       <thead>
                           <tr>
@@ -161,7 +172,6 @@
                             </tr>
                       </thead>
                       <tbody id="table">
-          
                       </tbody>
                     </table>
               </div>
@@ -175,6 +185,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript">
+      function isiulang(){
+        $("#loading").show();
+        $.ajax({
+          url: 'processing/pilih_engine.php',
+          type: 'post',
+          data: {
+            data : 'SISTEM:ADMIN:0',
+          },
+          success: function(data){
+            console.log(data);
+            get_data();
+          }
+        });
+      }
       $(document).ready(function(){
         $("#loading").show();
         get_data();

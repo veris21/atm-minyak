@@ -81,7 +81,7 @@ void loop() {
  
 
   if(satuLiter == 1){
-    if(jarak > 10){
+    if(jarak > 7.49){
             digitalWrite(in1, HIGH);
             satuLiter=0;
             pesan = 1200;
@@ -128,7 +128,7 @@ void loop() {
     }
   }
   if(sepuluhLiter == 1){
-    if(jarak > 30){
+    if(jarak > 29.49){
             digitalWrite(in1, HIGH);
             sepuluhLiter=0;
             pesan = 1200;
@@ -138,7 +138,7 @@ void loop() {
   }
 
   if(isiUlang == 1){
-    if(jarak < 3.0){
+    if(jarak < 4.99){
             digitalWrite(in2, HIGH);
             isiUlang = 0;
             pesan = 1200;

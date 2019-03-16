@@ -14,49 +14,44 @@ if($_POST['data']!=''){
         case 1:
             $command = 'sudo python /var/www/html/engine/satuliter.py';
             $output = exec($command);
-            // echo $output;
             break;
         case 2:
             $command = 'sudo python /var/www/html/engine/dualiter.py';
             $output = exec($command);
-            // echo $output;
             break;
         case 4:
             $command = 'sudo python /var/www/html/engine/empatliter.py';
             $output = exec($command);
-            // echo $output;
             break;
         case 5:
             $command = 'sudo python /var/www/html/engine/limaliter.py';
             $output = exec($command);
-            // echo $output;
             break;
         case 8:
             $command = 'sudo python /var/www/html/engine/delapanliter.py';
             $output = exec($command);
-            // echo $output;
             break;
         case 10:
             $command = 'sudo python /var/www/html/engine/sepuluhliter.py';
             $output = exec($command);
-            // echo $output;
+            break;
+        case 0:
+            $command = 'sudo python /var/www/html/engine/isiulang.py';
+            $output = exec($command);
             break;
         default:
             $command = 'sudo python /var/www/html/engine/isiulang.py';
             $output = exec($command);
-            // echo $output;
             break;
     }
     
     if (mysqli_query($conn, $sql)) {
-        // echo "New record created successfully";
-        echo $output;
+        echo 'SEDANG MENGISI '.$output;
     } else {
         echo mysqli_error($conn);
     }
     mysqli_close($conn);
 }else {
-    // $output = exec('sudo python /var/www/html/engine/isiulang.py'); 
     echo "Tidak Dapat Menghubungi Sensor";
     echo "<hr>";
     echo "TimeZone : ".date_default_timezone_get() ." " .date("d-M-Y, H:i:s", time()). " WIB"; 
