@@ -3,7 +3,8 @@ include "conection.php";
 $conn->set_charset("utf8");
 $csv  = "Log-Minyak-" . date('d-m-Y-his') . '.csv';
 $file = fopen($csv, 'w');
-if (!$conn_result = mysqli_query($conn, "SELECT * FROM log_minyak"))
+// if (!$conn_result = mysqli_query($conn, "SELECT * FROM log_minyak"))
+if(!$conn_result = $conn->query( "SELECT * FROM log_minyak" ))
     printf("Error: %s\n", $conn->error);
     while ($column = mysqli_fetch_field($conn_result)) {
         $column_names[] = $column->name;
@@ -19,4 +20,5 @@ if (!$conn_result = mysqli_query($conn, "SELECT * FROM log_minyak"))
     }
 fclose($file);
 header('Location: '.$csv);
+header('Content-Type: text/csv; charset=utf-8');
 ?>

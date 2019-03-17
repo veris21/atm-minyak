@@ -39,10 +39,6 @@ if($_POST['data']!=''){
             $command = 'sudo python /var/www/html/engine/isiulang.py';
             $output = exec($command);
             break;
-        default:
-            $command = 'sudo python /var/www/html/engine/isiulang.py';
-            $output = exec($command);
-            break;
     }
     
     if (mysqli_query($conn, $sql)) {
