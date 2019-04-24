@@ -5,7 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <title>Mesin Kontrol Minyak Tanah</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="/bootstrap.min.css">
   <style>
       .table-responsive {
           display: table;
@@ -153,9 +154,18 @@
         </div>
         <div class="col-md-2 col-sm-2 col-xs-2"></div>
         <div class="col-md-5 col-sm-5 col-xs-5">
-          <button type="button" onclick="isiulang()" class="btn btn-primary btn-block">
-            Isi Ulang Tangki Ukur
-          </button>
+          <div class="row">
+            <div class="col-md-6">
+              <button type="button" onclick="isiulang()" class="btn btn-primary btn-block">
+                Isi Ulang Tangki Ukur
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button type="button" onclick="kuras()" class="btn btn-danger btn-block">
+                Kuras Tangki Ukur
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -184,12 +194,28 @@
         </div>
       </div>
     
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <!-- <script src="instascan.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+  <script src="/jquery.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+    <script src="/bootstrap.min.js"></script>
     <script type="text/javascript">
       function isiulang(){
+        $("#loading").show();
+        $.ajax({
+          url: '/processing/pilih_engine.php',
+          type: 'post',
+          data: {
+            data : 'SISTEM:ADMIN:99',
+          },
+          success: function(data){
+            console.log(data);
+            alert("Sedang Mengisi Tangki");
+            get_data();
+          }
+        });
+      }
+      function kuras(){
         $("#loading").show();
         $.ajax({
           url: '/processing/pilih_engine.php',
@@ -199,6 +225,7 @@
           },
           success: function(data){
             console.log(data);
+            alert("Sedang Menguras Tangki");
             get_data();
           }
         });
@@ -226,7 +253,7 @@
                 <td scope="row">`+reg_date+`</td><
                 <td>`+desa+`</td>
                 <td>`+nik+`</td>
-                <td>`+liter+` Liter</td>
+                <td>`+liter+`</td>
                 /tr>`;
             }
             $("#table").html(tabel);

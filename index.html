@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
  <title>Mesin Kontrol Minyak Tanah</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="/bootstrap.min.css">
 <style>
 .loading {
     position: fixed;
@@ -171,7 +172,7 @@
           <br>
           <br>
         <input type="hidden" name="form_input_data" id="form_input_data">
-        <button style="padding:60px" type="button" class="btn btn-lg btn-success btn-block" id="send">Buka Keran Mesin <i class="fa fa-paper-plane"></i></button>
+        <!-- <button style="padding:60px" type="button" class="btn btn-lg btn-success btn-block" id="send" onclick="send_b()">Buka Keran Mesin <i class="fa fa-paper-plane"></i></button> -->
         <hr>
         <br>
         <br>
@@ -182,20 +183,25 @@
           <div class="well">
             <hr>
             <br>
-            <button style="padding:60px" type="button" id="btn_scan" class="btn btn-lg btn-success btn-block">Lakukan Pemindaian <i class="fa fa-camera"></i></button>
+            <!-- <button style="padding:60px" type="button" id="btn_scan"  onclick="btn_scan_b()" class="btn btn-lg btn-success btn-block">Lakukan Pemindaian <i class="fa fa-camera"></i></button> -->
             <hr>
           </div>
       <hr>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="/jquery.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
   <!-- <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script> -->
   <script src="/instascan.min.js"></script>
   <script src="/playsound.js"></script>
     <!-- <script src="instascan.min.js"></script> -->
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+  <script src="/bootstrap.min.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
-      $.playSound("1.mp3").delay( 1000 );
+      // $.playSound("1.mp3").delay( 1000 );
+      // setTimeout(function(){
+        lakukan_scanning();
+      // }, 5000);
     });
      $('#hasil').text("");
       let scanner = new Instascan.Scanner({ 
@@ -209,6 +215,9 @@
           $('#form_input_data').val(content);
           $('#hasil').text(content);
           $.playSound("3.mp3");
+          // setTimeout(function(){
+              send_b();
+          // }, 2000);
         });
         function lakukan_scanning(){
           Instascan.Camera.getCameras().then(function (cameras) {
@@ -233,33 +242,56 @@
           $("#output").hide();
           $.playSound("5.mp3");
         }
-      $('#btn_scan').on('click', function(){
-        if($(this).html().trim() == 'Lakukan Pemindaian <i class="fa fa-camera"></i>' ){
-        $.stopSound();
-        lakukan_scanning();
-        $('#welcome').hide();
-        $(this).attr('class', 'btn btn-lg btn-warning btn-block');
-        $(this).html('Matikan Pemindaian <i class="fa fa-camera"></i>');
-        }else{
-            $(this).attr('class', 'btn btn-lg btn-success btn-block');
-            $(this).html('Lakukan Pemindaian <i class="fa fa-camera"></i>');
-            stop_scanning();
-            $('#sendDiv').hide();
-            $('#welcome').show();
-        }
-      });
+      // $('#btn_scan').on('click', function(){
+      //   if($(this).html().trim() == 'Lakukan Pemindaian <i class="fa fa-camera"></i>' ){
+      //   $.stopSound();
+      //   lakukan_scanning();
+      //   $('#welcome').hide();
+      //   $(this).attr('class', 'btn btn-lg btn-warning btn-block');
+      //   $(this).html('Matikan Pemindaian <i class="fa fa-camera"></i>');
+      //   }else{
+      //       $(this).attr('class', 'btn btn-lg btn-success btn-block');
+      //       $(this).html('Lakukan Pemindaian <i class="fa fa-camera"></i>');
+      //       stop_scanning();
+      //       $('#sendDiv').hide();
+      //       $('#welcome').show();
+      //   }
+      // });
       
     </script>
    
     <script>
-      $('#send').on('click', function(){
+      function send_b(){
         $('#sendDiv').hide();
         $("#output").hide();
         $("#loading").show();
         var data = $('#form_input_data').val();
         kirimData(data);
-        // alert(data);
-      });
+      }
+
+      function btn_scan_b(){
+        if($("#btn_scan").html().trim() == 'Lakukan Pemindaian <i class="fa fa-camera"></i>' ){
+        $.stopSound();
+        lakukan_scanning();
+        $('#welcome').hide();
+        $("#btn_scan").attr('class', 'btn btn-lg btn-warning btn-block');
+        $("#btn_scan").html('Matikan Pemindaian <i class="fa fa-camera"></i>');
+        }else{
+            $("#btn_scan").attr('class', 'btn btn-lg btn-success btn-block');
+            $("#btn_scan").html('Lakukan Pemindaian <i class="fa fa-camera"></i>');
+            stop_scanning();
+            $('#sendDiv').hide();
+            $('#welcome').show();
+        }
+      }
+      // $('#send').on('click', function(){
+      //   $('#sendDiv').hide();
+      //   $("#output").hide();
+      //   $("#loading").show();
+      //   var data = $('#form_input_data').val();
+      //   kirimData(data);
+      //   // alert(data);
+      // });
       function kirimData(data){
         $.stopSound();
         $.ajax({

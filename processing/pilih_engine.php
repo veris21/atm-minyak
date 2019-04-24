@@ -7,16 +7,19 @@ if($_POST['data']!=''){
     $nik = $parse[0];
     $desa = $parse[1];
     $liter = (int)$parse[2];
+    if($liter == 0){
+        $liter_input = 'Kuras Tangki Ukur';
+    }elseif ($liter == 99) {
+        $liter_input = 'Isi Ulang Tangki Ukur';
+    }else {
+        $liter_input = 'Mengisi '.$liter.' Liter';
+    }
     $sekarang = time();
     $sql = "INSERT INTO log_minyak (nik, desa, liter, reg_date)
-    VALUES ('$nik', '$desa', '$liter', '$sekarang')";
+    VALUES ('$nik', '$desa', '$liter_input', '$sekarang')";
     switch ($liter) {
         case 1:
             $command = 'sudo python /var/www/html/engine/satuliter.py';
-            $output = exec($command);
-            break;
-        case 2:
-            $command = 'sudo python /var/www/html/engine/dualiter.py';
             $output = exec($command);
             break;
         case 4:
@@ -27,16 +30,35 @@ if($_POST['data']!=''){
             $command = 'sudo python /var/www/html/engine/limaliter.py';
             $output = exec($command);
             break;
-        case 8:
-            $command = 'sudo python /var/www/html/engine/delapanliter.py';
+
+        case 180:
+            $command = 'sudo python /var/www/html/engine/180.py';
             $output = exec($command);
             break;
-        case 10:
-            $command = 'sudo python /var/www/html/engine/sepuluhliter.py';
+
+        case 182:
+            $command = 'sudo python /var/www/html/engine/182.py';
+            $output = exec($command);
+            break;
+
+
+
+        case 181:
+            $command = 'sudo python /var/www/html/engine/181.py';
+            $output = exec($command);
+            break;
+
+        case 183:
+            $command = 'sudo python /var/www/html/engine/183.py';
+            $output = exec($command);
+            break;
+
+        case 99:
+            $command = 'sudo python /var/www/html/engine/isiulang.py';
             $output = exec($command);
             break;
         case 0:
-            $command = 'sudo python /var/www/html/engine/isiulang.py';
+            $command = 'sudo python /var/www/html/engine/kuras.py';
             $output = exec($command);
             break;
     }
