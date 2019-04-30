@@ -246,14 +246,14 @@
               const id = obj[i]['id'];
               const nik = obj[i]['nik'];
               const desa = obj[i]['desa'];
-              const liter = obj[i]['liter'];
+              const banyak = obj[i]['banyak'];
               const reg_date = obj[i]['reg_date'];
               tabel += `<tr>
                 <td>`+(i+1)+`</td>
                 <td scope="row">`+reg_date+`</td><
                 <td>`+desa+`</td>
                 <td>`+nik+`</td>
-                <td>`+liter+`</td>
+                <td>`+banyak+`</td>
                 /tr>`;
             }
             $("#table").html(tabel);
